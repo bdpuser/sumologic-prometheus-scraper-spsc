@@ -464,7 +464,8 @@ def validate_config_file(ctx, param, value):
     envvar="CONFIG_PATH",
     callback=validate_config_file,
     type=click.File("r"),
-    default="config.json",
+    # default="config.json",
+    default="config",
 )
 def scrape(config):
     expanded_config = expand_config(config)

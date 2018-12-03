@@ -1,0 +1,12 @@
+{
+  "global": {
+    "sumo_http_url": "https://collectors.us2.sumologic.com/receiver/v1/http/ZaVnC4dhaV1j_EP8JdDdkVCORbdfa2QKUe1puDD8kZ5oZKb7Zhvf5pcZ4oVbNDiRj11GmWIorYasgG7khHgFHkvv0K5e1rRl2xnz64K3Z3RQTAB4BQ74iw==",
+    "source_category": "prometheus_scraper"
+  },
+  "targets": [
+    {
+      "name": "target-name-1",
+      "url": "https://drone.bdp-core.com/metrics"
+    }
+  ]
+}
