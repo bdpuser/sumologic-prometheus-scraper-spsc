@@ -1,11 +1,8 @@
-FROM python:3.6.5-alpine3.7
+FROM alpine as SHOEY
+CMD echo 'hey'
 
-RUN pip install --upgrade pip pipenv
+FROM nginx
 
-WORKDIR /opt/sumo
-
-COPY . /opt/sumo/
-
-RUN pipenv install --system
-
-CMD ["python", "./sumologic_prometheus_scraper.py"]
+COPY html /usr/share/nginx/html
+COPY entrypoint.sh /
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

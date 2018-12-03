@@ -1,0 +1,27 @@
+pipeline:
+  build_python:3.6.5-alpine3.7:
+    image: spscommerce/plugin-ecr
+    repo: 056684691971.dkr.ecr.us-east-1.amazonaws.com/python:3.6.5-alpine3.7
+    tags:
+    - ${DRONE_COMMIT}
+    - latest
+    when:
+      event:
+      - push
+      branch:
+      - master
+  bdp_core_deploy:
+    image: spscommerce/plugin-bdp-core
+    environment:
+    - VERSION=${DRONE_COMMIT}  # the version of your bdp-core deploy. Must match docker container tags
+    - REGION=us-east-1 # the region you are deploying to
+    - BDP_FILE=.bdp # the absolute path in the repo to the .bdp file that is being deployed
+    - ACTION=deploy # the bdp-core action
+    - ENVIRONMENT=dev # the environment to deploy to
+    commands:
+    - python -u /build/plug.py
+    when:
+      event:
+      - push
+      branch:
+      - master

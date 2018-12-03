@@ -1,0 +1,33 @@
+# check out the docs for ecs_service templates if you have any questions:
+# https://github.com/SPSCommerce/bdp-core/blob/master/docs/adapters/deploy/ecs_service.md
+
+
+cluster: "webapp" # change this if needed (but its probably ok). Consult your friendly cloud engineer if you have any questions
+count: !FindEnvVar count
+
+# you can pass different configurations per env by defining items in the env_map and referencing the values using the !FindEnvVar function
+env_map:
+  dev:
+    count: 2
+
+
+containers:
+- name: python:3.6.5-alpine3.7 # logical name for the container
+  image: python:3.6.5-alpine3.7 # name of ecr repository.
+  memory: 128 # megabytes of memory to provide to your container
+  ports: # Container port. this is a list but only one value is accepted.
+  - 80
+  env: # provide a list of environment variables to configure your container with
+  - name: environ
+    val: !Sub "${Env}"
+
+scaling:
+  min_count: 2
+  max_count: 5
+  # default scaling policies are cpu / memory utilization. These probably aren't useful for your app!
+  # change to scale off the metric you need (check the docs, linked above)
+  add_default_policies: true
+
+role:
+  credstash: true # defaults to true, gives credstash access according to SIP3
+  ssm: true # defaults to true, gives SSM access according to SIP21
